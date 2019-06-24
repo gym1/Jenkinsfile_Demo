@@ -31,23 +31,9 @@ pipeline {
                 }
             }
         }
-        stage('Running the tests with PHPunit'){
-            steps{
-                sh 'docker run -v /var/coverage/reportsr:/var/www/reports composer tests'
-            }
-        }
-        stage('Generating test coverage'){
-            steps{
-                step([
-                    $class: 'CloverPublisher',
-                    cloverReportDir: '/var/coverage/reports/',
-                    cloverReportFileName: 'coverage.xml',
-                    healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80],
-                    unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
-                    failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]
-                ])
-            }
-        }
+      stage('Run Code Coverage') {
+        cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/cobertura.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+      }
         stage('Deploy') {
             steps {
                 echo 'Pop me an meesage'
