@@ -1,6 +1,6 @@
 
 pipeline {
-    agent any
+    agent none
     stages {
         stage('Build') {
             steps {
@@ -16,9 +16,20 @@ pipeline {
             }            
         }
         stage('Test') {
-            steps {
-                echo 'Testing..'
-                sh './stringR'
+            parallel{
+                stage('Smoke Test'){
+                    agent { label "Smoke Test" }
+                    steps{
+                        echo 'Smoke Testing'
+                    }
+                }
+                stage('Sanity Test'){
+                    agent { label "Sanity Test" }
+                    steps {
+                        echo 'Testing..'
+                        sh './stringR'
+                    }
+                }
             }
         }
         stage('Deploy') {
