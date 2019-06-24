@@ -3,14 +3,14 @@ pipeline {
     agent any
     stages {
         stage('Build') {
-            stages {
-                stage('Check GCC'){
+            steps {
+                step('Check GCC'){
                     steps{                        
                         sh 'gcc -v'
                         sh 'echo "Hello World"'
                     }
                 }
-                stage('GCC Compile'){
+                step('GCC Compile'){
                     steps {
                         sh 'gcc -Wall Reverse_String_I.c -o stringR'
                     }
