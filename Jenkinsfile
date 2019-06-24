@@ -18,20 +18,31 @@ pipeline {
         stage('Test') {
             stages{
                 stage('Smoke Test'){
-                    agent { label "Smoke Test" }
                     steps{
                         echo 'Smoke Testing'
                         sh './stringR'
                     }
                 }
                 stage('Sanity Test'){
-                    agent { label "Sanity Test" }
                     steps {
                         echo 'Testing..'
                         sh './stringR'
                     }
                 }
             }
+        }
+        stage('Running the tests with PHPunit'){
+            sh 'docker run -v /var/coverage/reportsr:/var/www/reports composer tests'
+        }
+        stage('Generating test coverage'){
+            step([
+                $class: 'CloverPublisher',
+                cloverReportDir: '/var/coverage/reports/',
+                cloverReportFileName: 'coverage.xml',
+                healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80],
+                unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
+                failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]
+            ])
         }
         stage('Deploy') {
             steps {
