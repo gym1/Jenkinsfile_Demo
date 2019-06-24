@@ -3,7 +3,7 @@ pipeline {
     agent any
     stages {
         stage('Build') {
-            steps {
+            stages {
                 stage('Check GCC'){
                     steps{                        
                         sh 'gcc -v'
