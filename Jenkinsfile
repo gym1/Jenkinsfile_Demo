@@ -31,12 +31,22 @@ pipeline {
                 }
             }
         }
-        @Library('github.com/spotify/jenkins-coverage-poster@1.0') _
-        stage("Run tests") {
-            sh "mvn test"
+        stage('Running the tests with PHPunit'){
+            steps{
+                sh 'docker run -v /var/coverage/reportsr:/var/www/reports composer tests'
+            }
         }
-        stage("Post coverage") {
-            postJacocoCoverage(threshold: 75)
+        stage('Generating test coverage'){
+            steps{
+                step([
+                    $class: 'CloverPublisher',
+                    cloverReportDir: '/var/coverage/reports/',
+                    cloverReportFileName: 'coverage.xml',
+                    healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80],
+                    unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
+                    failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]
+                ])
+            }
         }
         stage('Deploy') {
             steps {
