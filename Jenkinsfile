@@ -1,4 +1,4 @@
-pipleline { 
+pipeline { 
   podTemplate(
     label: 'jenkins-pipeline', 
     inheritFrom: 'default',
