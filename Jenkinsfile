@@ -7,7 +7,7 @@ pipeline {
                 script{
                     stage('Check GCC'){                       
                         sh 'gcc -v'
-                        sh 'echo "Hello World"'
+                        sh 'docker version'
                     }
                     stage('GCC Compile'){
                         sh 'gcc -Wall Reverse_String_I.c -o stringR'
