@@ -1,7 +1,6 @@
 
 pipeline {
     agent any
-    node ('jenkins-pipeline') {
     stages{
         stage('Get latest version of code') {
             steps{
@@ -61,5 +60,4 @@ pipeline {
             }
         }
     }
-}
 }
