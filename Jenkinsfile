@@ -7,38 +7,34 @@ pipeline {
                 checkout scm
             }
         }
-        container ('chrime') {
-            stages {
-                stage('Build') {
-                    steps {
-                        script{
-                            stage('Check GCC'){                       
-                                sh 'gcc -v'
-                            }
-                            stage('Install Package'){
-                                sh 'npm install --quiet'
-                            }
-                            stage('GCC Compile'){
-                                sh 'gcc -Wall Reverse_String_I.c -o stringR'
-                            }
-                        }
+        stage('Build') {
+            steps {
+                script{
+                    stage('Check GCC'){                       
+                        sh 'gcc -v'
                     }
-                }            
-                stage('Test') {
-                    stages{
-                        stage('Smoke Test'){
-                            steps{
-                                echo 'Smoke Testing'
-                                sh './stringR'
-                            }
-                        }
-                        stage('Sanity Test'){
-                            steps {
-                                echo 'Testing..'
-                                sh './stringR'
-                                junit '**/cobertura.xml'
-                            }
-                        }
+                    stage('Install Package'){
+                        sh 'npm install --quiet'
+                    }
+                    stage('GCC Compile'){
+                        sh 'gcc -Wall Reverse_String_I.c -o stringR'
+                    }
+                }
+            }
+        }            
+        stage('Test') {
+            stages{
+                stage('Smoke Test'){
+                    steps{
+                        echo 'Smoke Testing'
+                        sh './stringR'
+                    }
+                }
+                stage('Sanity Test'){
+                    steps {
+                        echo 'Testing..'
+                        sh './stringR'
+                        junit '**/cobertura.xml'
                     }
                 }
             }
