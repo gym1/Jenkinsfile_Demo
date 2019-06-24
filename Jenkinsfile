@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                scripts{
+                script{
                     stage('Check GCC'){                       
                         sh 'gcc -v'
                         sh 'echo "Hello World"'
