@@ -45,10 +45,19 @@ pipeline {
             }
         }
         stage('Deploy Local') {
+            steps{
+                echo 'Hi'
+            }
         }
         stage('Run Integration Tests') {
+            steps{
+                echo 'Hu'
+            }
         }
         stage('Deploy Production') {
+            steps{
+                echo 'He'
+            }
         }
         stage('Run Post Deployment Tests') {
             steps {
