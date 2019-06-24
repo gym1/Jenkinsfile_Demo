@@ -1,22 +1,24 @@
 
 pipeline {
-    agent { docker { image 'gcc' } }
+    agent any
     stages {
         stage('Build') {
-            steps {
-                sh 'gcc -v'
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
+            stage('Check GCC'){
+                steps {
+                    sh 'gcc -v'
+                    sh 'echo "Hello World"'
+                }
             }
+            stage('GCC Compile'){
+                steps {
+                    sh 'gcc -Wall Reverse_String_I.c -o stringR'
+                }
+            }            
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh 'gcc Reverse_String_I.c'
-                sh './a.out'
+                sh './stringR'
             }
         }
         stage('Deploy') {
