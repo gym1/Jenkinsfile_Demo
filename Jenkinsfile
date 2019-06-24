@@ -32,7 +32,9 @@ pipeline {
             }
         }
         stage('Running the tests with PHPunit'){
-            sh 'docker run -v /var/coverage/reportsr:/var/www/reports composer tests'
+            steps{
+                sh 'docker run -v /var/coverage/reportsr:/var/www/reports composer tests'
+            }
         }
         stage('Generating test coverage'){
             step([
