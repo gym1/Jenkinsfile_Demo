@@ -4,14 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                step('Check GCC'){
-                    steps{                        
+                scripts{
+                    stage('Check GCC'){                       
                         sh 'gcc -v'
                         sh 'echo "Hello World"'
                     }
-                }
-                step('GCC Compile'){
-                    steps {
+                    stage('GCC Compile'){
                         sh 'gcc -Wall Reverse_String_I.c -o stringR'
                     }
                 }
