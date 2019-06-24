@@ -1,11 +1,4 @@
 pipeline { 
-  podTemplate(
-    label: 'jenkins-pipeline', 
-    inheritFrom: 'default',
-    containers: [
-      containerTemplate(name: 'chrome', image: 'garunski/alpine-chrome:latest', command: 'cat', ttyEnabled: true)
-    ]
-  ) {
     node ('jenkins-pipeline') {
       stage('Get latest version of code') {
         checkout scm
