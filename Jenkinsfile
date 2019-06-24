@@ -21,6 +21,7 @@ pipeline {
                     agent { label "Smoke Test" }
                     steps{
                         echo 'Smoke Testing'
+                        sh './stringR'
                     }
                 }
                 stage('Sanity Test'){
