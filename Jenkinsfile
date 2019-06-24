@@ -1,4 +1,4 @@
-timestamps { 
+pipleline { 
   podTemplate(
     label: 'jenkins-pipeline', 
     inheritFrom: 'default',
