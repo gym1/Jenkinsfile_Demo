@@ -12,13 +12,16 @@ pipeline {
                 '''
             }
         }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                sh 'gcc Reverse_String_I.c'
+                sh './a.out'
+            }
+        }
         stage('Deploy') {
             steps {
-                timeout(time: 3, unit: 'MINUTES') {
-                    retry(5) {
-                        sh './flakey-deploy.sh'
-                    }
-                }
+                echo 'Pop me an meesage'
             }
         }
     }
