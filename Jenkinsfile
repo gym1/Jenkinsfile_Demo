@@ -26,6 +26,7 @@ pipeline {
                     steps {
                         echo 'Testing..'
                         sh './stringR'
+                        junit 'test-results/**/*.xml'
                     }
                 }
             }
