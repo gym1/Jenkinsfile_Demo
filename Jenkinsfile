@@ -7,7 +7,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build') {
+        stage('First Build') {
             steps {
                 script{
                     stage('Check GCC'){                       
@@ -21,48 +21,109 @@ pipeline {
                     }
                 }
             }
+        }
+        stage('Package'){
+            stages{
+                stage('Push bin to backend'){
+                    steps{
+                        echo 'Pushing'
+                    }
+                }
+                stage('Load to Safe'){
+                    steps{
+                        echo 'Loading...'
+                    }
+                }
+            }
         }            
         stage('Test') {
             stages{
                 stage('Smoke Test'){
                     steps{
-                        echo 'Smoke Testing'
+                        echo 'Doing No-Zone QA Test'
                         sh './stringR'
                     }
                 }
-                stage('Sanity Test'){
+                stage('Unit Test'){
                     steps {
-                        echo 'Testing..'
+                        echo 'QA Testing..'
                         sh './stringR'
                         //junit '**/cobertura.xml'
                     }
                 }
-            }
-        }
-        stage('Run Code Coverage') {
-            steps{
-                echo 'Cannot locate report'
-                //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/cobertura.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+                stage('Run Code Coverage') {
+                    steps{
+                        echo 'Generate code Coverage'
+                        //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/cobertura.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+                    }
+                }
+                stage('Automation'){
+                    steps{
+                        echo 'Run Full QA_Test'
+                    }
+                }
             }
         }
         stage('Deploy Local') {
-            steps{
-                echo 'Hi'
+            stages{
+                stage('Analysis Result'){
+                    steps{
+                        echo 'Setup a standard'
+                    }
+                }
+                stage('Merge Code Local'){
+                    steps{
+                        echo 'Auto Merge Code based on standard'
+                    }
+                }
             }
         }
         stage('Run Integration Tests') {
-            steps{
-                echo 'Hu'
+            stages{
+                stage('Re-Build'){
+                    steps{
+                        echo 'Re-Building/Compile......'
+                    }
+                }
+                stage('Re-Package'){
+                    steps{
+                        echo 'Re-Package......'
+                    }
+                }                
+                stage('Sanity Test'){
+                    steps{
+                        echo 'Re-Do QA_Test'
+                    }
+                }
+                stage('Full Test'){
+                    steps{
+                        echo 'Run all five tests'
+                    }
+                }
+                stage('Test Report'){
+                    steps{
+                        echo 'Generate a full test report'
+                    }
+                }                
             }
         }
         stage('Deploy Production') {
-            steps{
-                echo 'He'
-            }
-        }
-        stage('Run Post Deployment Tests') {
-            steps {
-                echo 'Pop me an meesage'
+            stages{
+                stage('Analysis Result'){
+                    steps{
+                        echo 'Setup a standard'
+                    } 
+                }
+                stage('Merge Code'){
+                    steps{
+                        echo 'Merge Code to dev-branch'
+                    }
+                }
+                stage('Release Check'){
+                    steps{
+                        echo 'Check for release'
+                    }
+                }
             }
         }
     }
