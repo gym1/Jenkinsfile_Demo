@@ -7,34 +7,38 @@ pipeline {
                 checkout scm
             }
         }
+        // Build and Package Stage will push bin file to backend server
+        // and load the bin file into the Safe
         stage('First Build Stage') {
-            steps {
-                script{
-                    stage('Check GCC'){                       
-                        sh 'gcc -v'
-                    }
-                    stage('Install Package'){
-                        sh 'npm install --quiet'
-                    }
-                    stage('GCC Compile'){
-                        sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
-                    }
+            stages {
+                stage('Check GCC'){
+                	steps{
+                		echo 'check Compiler version'
+                	}
+                }
+                stage('Install Library'){
+                	steps{
+                		echo 'include enough Library files in the compile file or c file'
+                	}
+                }
+                stage('Compile'){
+                	steps{
+                		echo 'Compile to a bin file'
+                		sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                	}
                 }
             }
         }
-        /*
+    }
+    stages{
         agent{
         	docker { image 'node:7-alpine' }
-        }*/
+        }
         stage('Package Stage'){
             stages{
                 stage('Push bin to backend'){
                     steps{
                         echo 'Pushing'
-                        withCredentials([usernamePassword(credentialsId: 'gym1', passwordVariable: 'lawrence0217', usernameVariable: 'gym1')]) {
-    						sh 'git tag -78987 -m "Jenkins"'
-    						sh 'git push https://${gym1}:${lawrence0217}@<Jenkinsfile_Demo> --tags'
-						}
                     }
                 }
                 stage('Load to Safe'){
@@ -137,3 +141,15 @@ pipeline {
         }
     }
 }
+
+
+// For Pushing into Git
+// Throw an error without explaination
+/*
+echo 'Pushing'
+withCredentials([usernamePassword(credentialsId: 'gym1', passwordVariable: 'lawrence0217', usernameVariable: 'gym1')]) {
+sh 'git tag -78987 -m "Jenkins"'
+sh 'git push https://${gym1}:${lawrence0217}@<Jenkinsfile_Demo> --tags'
+}
+
+*/
