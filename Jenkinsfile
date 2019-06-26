@@ -1,6 +1,6 @@
 
 pipeline {
-    agent none
+    agent any
     stages{
         stage('Get latest version of code') {
             steps{
@@ -22,9 +22,10 @@ pipeline {
                 }
             }
         }
+        /*
         agent{
         	docker { image 'node:7-alpine' }
-        }
+        }*/
         stage('Package Stage'){
             stages{
                 stage('Push bin to backend'){
