@@ -7,7 +7,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('First Build') {
+        stage('First Build Stage') {
             steps {
                 script{
                     stage('Check GCC'){                       
@@ -22,7 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('Package'){
+        stage('Package Stage'){
             stages{
                 stage('Push bin to backend'){
                     steps{
@@ -36,7 +36,7 @@ pipeline {
                 }
             }
         }            
-        stage('Test') {
+        stage('Test Stage') {
             stages{
                 stage('Smoke Test'){
                     steps{
@@ -64,7 +64,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Local') {
+        stage('Deploy Local Stage') {
             stages{
                 stage('Analysis Result'){
                     steps{
@@ -78,7 +78,7 @@ pipeline {
                 }
             }
         }
-        stage('Run Integration Tests') {
+        stage('Run Integration Tests (Container') {
             stages{
                 stage('Re-Build'){
                     steps{
