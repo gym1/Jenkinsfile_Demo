@@ -112,6 +112,7 @@ pipeline {
                 stage('Analysis Result'){
                     steps{
                         echo 'Setup a standard'
+                        sh './stringR > temp.txt'
                     } 
                 }
                 stage('Merge Code'){
