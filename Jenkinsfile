@@ -147,7 +147,6 @@ node{
 }
 */
 
-#!/usr/bin/groovy
 
 timestamps { 
   podTemplate(
