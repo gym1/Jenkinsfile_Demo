@@ -1,7 +1,7 @@
 
 pipeline {
     agent{
-    	docker { image 'sudo node:7-alpine' }
+    	sudo docker { image 'node:7-alpine' }
     }
     stages{
         stage('Get latest version of code') {
