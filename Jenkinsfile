@@ -55,7 +55,8 @@ pipeline {
                     steps {
                         echo 'QA Testing..'
                         sh './stringR.bin'
-                        junit '**/cobertura.xml'
+                        junit '**/target/*.xml'
+                        //junit '**/cobertura.xml'
                     }
                 }
                 stage('Run Code Coverage') {
