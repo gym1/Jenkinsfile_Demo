@@ -78,7 +78,7 @@ pipeline {
                 }
             }
         }
-        stage('Run Integration Tests (Container') {
+        stage('Run Integration Tests (Container)') {
             stages{
                 stage('Re-Build'){
                     steps{
@@ -107,7 +107,7 @@ pipeline {
                 }                
             }
         }
-        stage('Deploy Production') {
+        stage('Deploy Production Stage') {
             stages{
                 stage('Analysis Result'){
                     steps{
