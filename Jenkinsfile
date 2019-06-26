@@ -129,7 +129,7 @@ pipeline {
     }
 }
 
-
+/*
 node{
 	stage('Get latest version of code') {
         checkout scm
@@ -146,3 +146,4 @@ node{
         }
     }
 }
+*/
