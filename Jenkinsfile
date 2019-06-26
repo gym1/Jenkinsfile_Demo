@@ -32,8 +32,8 @@ pipeline {
                     steps{
                         echo 'Pushing'
                         withCredentials([usernamePassword(credentialsId: 'gym1', passwordVariable: 'lawrence0217', usernameVariable: 'gym1')]) {
-    						sh("git tag -78987 -m 'Jenkins'")
-    						sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<Jenkinsfile_Demo> --tags')
+    						sh 'git tag -78987 -m 'Jenkins''
+    						sh 'git push https://${gym1}:${lawrence0217}@<Jenkinsfile_Demo> --tags'
 						}
                     }
                 }
