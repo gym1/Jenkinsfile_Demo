@@ -1,8 +1,6 @@
 
 pipeline {
-    agent{
-    	docker { image 'node:7-alpine' }
-    }
+    agent any
     stages{
         stage('Get latest version of code') {
             steps{
@@ -19,16 +17,23 @@ pipeline {
                         sh 'npm install --quiet'
                     }
                     stage('GCC Compile'){
-                        sh 'gcc -Wall Reverse_String_I.c -o stringR'
+                        sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
                     }
                 }
             }
+        }
+        agent{
+        	docker { image 'node:7-alpine' }
         }
         stage('Package Stage'){
             stages{
                 stage('Push bin to backend'){
                     steps{
                         echo 'Pushing'
+                        withCredentials([usernamePassword(credentialsId: 'gym1', passwordVariable: 'lawrence0217', usernameVariable: 'gym1')]) {
+    						sh("git tag -78987 -m 'Jenkins'")
+    						sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<Jenkinsfile_Demo> --tags')
+						}
                     }
                 }
                 stage('Load to Safe'){
