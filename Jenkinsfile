@@ -128,3 +128,21 @@ pipeline {
         }
     }
 }
+
+
+node{
+	stage('Get latest version of code') {
+        checkout scm
+    }
+    stage('First Build Stage') {
+    	stage('Check GCC'){                       
+            sh 'gcc -v'
+        }
+        stage('Install Package'){
+            sh 'npm install --quiet'
+        }
+        stage('GCC Compile'){
+            sh 'gcc -Wall Reverse_String_I.c -o stringR'
+        }
+    }
+}
