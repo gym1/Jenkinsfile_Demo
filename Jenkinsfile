@@ -55,7 +55,7 @@ pipeline {
                     steps {
                         echo 'QA Testing..'
                         sh './stringR.bin'
-                        junit 'build/test-results/**/*.xml'
+                        junit 'build/**/*.xml'
                         //junit '**/cobertura.xml'
                     }
                 }
