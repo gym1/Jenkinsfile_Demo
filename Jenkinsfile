@@ -59,6 +59,11 @@ pipeline {
                         //junit '**/cobertura.xml'
                     }
                 }
+                post {
+                    always {
+                        junit 'build/**/*.xml'
+                    }
+                }
                 stage('Run Code Coverage') {
                     steps{
                         echo 'Generate code Coverage'
