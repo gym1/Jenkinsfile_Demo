@@ -62,6 +62,7 @@ pipeline {
                 stage('Run Code Coverage') {
                     steps{
                         echo 'Generate code Coverage'
+                        archive '/var/lib/jenkins/workspace/Jenkins_Demo1/stringR.bin'
                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'htmlpublisher-wrapper.html', reportName: 'Code Coverage', reportTitles: 'Show Something'])
                         //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/cobertura.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
                     }
