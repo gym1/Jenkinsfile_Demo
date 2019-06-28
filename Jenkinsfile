@@ -55,14 +55,15 @@ pipeline {
                     steps {
                         echo 'QA Testing..'
                         sh './stringR.bin'
-                        junit 'build/**/*.xml'
+                        //junit 'build/**/*.xml'
                         //junit '**/cobertura.xml'
                     }
                 }
                 stage('Run Code Coverage') {
                     steps{
                         echo 'Generate code Coverage'
-                        cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/cobertura.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'Coverage', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+                        //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/cobertura.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
                     }
                 }
                 stage('Automation'){
