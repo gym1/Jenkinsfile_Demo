@@ -39,12 +39,22 @@ pipeline {
                 				}
                 			}              			
                 		}
-                		stage('Lunix Compile'){
-                			steps{
-                				echo 'Compile to a bin file'
-                				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                		stage('Lunix'){
+                			stages{
+                				stage('Install Library'){
+                					steps{
+                						echo 'include enough Library files in the compile file or c file'
+                					}
+                				}
+                				stage('Lunix Compile'){
+                					steps{
+                						echo 'Compile to a bin file'
+                						sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                					}
+                				}
                 			}
                 		}
+                		
                 		stage('Special Compile'){
                 			steps{
                 				echo 'Compile to a bin file'
