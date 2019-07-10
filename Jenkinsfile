@@ -45,7 +45,7 @@ pipeline {
         }            
         stage('Test Stage') {
         	agent{
-        		sudo docker { image 'node:7-alpine' }
+        		docker { image 'node:7-alpine' }
         	}
             stages{
                 stage('Smoke Test'){
