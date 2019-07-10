@@ -24,7 +24,7 @@ pipeline {
                 }
                 stage('Compile'){
                 	parallel{
-                		stages{
+                		steps{
                 			stage('Check GCC'){
                 				steps{
                 					echo 'check Compiler version'
