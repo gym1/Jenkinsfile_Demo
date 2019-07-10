@@ -2,67 +2,56 @@
 pipeline {
     agent any
     stages{
-        stage('Get latest version of code') {
-            steps{
-                checkout scm
-            }
-        }
         // Build and Package Stage will push bin file to backend server
         // and load the bin file into the Safe
         // compile parallel
-        stage('First Build Stage') {
-            stages {
-                stage('Check GCC'){
-                	steps{
-                		echo 'check Compiler version'
-                	}
-                }
-                stage('Install Library'){
-                	steps{
-                		echo 'include enough Library files in the compile file or c file'
-                	}
-                }
-                stage('Compile'){
-                	parallel{
-                		stage('PC'){
-                			stages{
-                				stage('Check GCC'){
-                					steps{
-                						echo 'check Compiler version'
-                					}
-                				}
-                				stage('PC Compile'){
-                					steps{
-                						echo 'Compile to a bin file'
-                						sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
-                					}
-                				}
-                			}              			
-                		}
-                		stage('Lunix'){
-                			stages{
-                				stage('Install Library'){
-                					steps{
-                						echo 'include enough Library files in the compile file or c file'
-                					}
-                				}
-                				stage('Lunix Compile'){
-                					steps{
-                						echo 'Compile to a bin file'
-                						sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
-                					}
-                				}
+        stage('Build and Compile'){
+            parallel{
+          		stage('PC'){
+           			stages{
+                		stage('Get latest version of code'){
+                			steps{
+                				checkout scm
                 			}
                 		}
-                		
+                		stage('Check GCC'){
+                			steps{
+                				echo 'check Compiler version'
+                			}
+                		}
+                		stage('PC Compile'){
+                			steps{
+                				echo 'Compile to a bin file'
+                				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                			}
+                		}
+                	}              			
+                }
+                stage('Lunix'){
+                	stages{
+                		stage('Install Library'){
+                			steps{
+                				echo 'include enough Library files in the compile file or c file'
+                			}
+                		}
+                		stage('Lunix Compile'){
+                			steps{
+                				echo 'Compile to a bin file'
+                				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                			}
+                		}
+                	}
+                }                		
+                stage('Special'){
+                	stages{
                 		stage('Special Compile'){
                 			steps{
                 				echo 'Compile to a bin file'
                 				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
                 			}
-                		}	
-                	}                  
-                }
+                		}
+                	}	
+                }                  
             }
         }
         stage('Package Stage'){
