@@ -44,17 +44,20 @@ pipeline {
             }
         }            
         stage('Test Stage') {
+        	agent{
+        		docker { image 'node:7-alpine' }
+        	}
             stages{
                 stage('Smoke Test'){
                     steps{
-                        echo 'Doing No-Zone QA Test'
-                        sh './stringR.bin'
+                        echo 'Doing Quick QA Test with Zone Control'
+                        //sh './stringR.bin'
                     }
                 }
                 stage('Unit Test'){
                     steps {
-                        echo 'QA Testing..'
-                        sh './stringR.bin'
+                        echo 'Full QA Testing with zone control'
+                        //sh './stringR.bin'
                         //junit 'build/**/*.xml'
                         //junit '**/cobertura.xml'
                     }
@@ -67,9 +70,9 @@ pipeline {
                         //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/cobertura.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
                     }
                 }
-                stage('Automation'){
+                stage('Automation Test'){
                     steps{
-                        echo 'Run Full QA_Test'
+                        echo 'Run inifinite Test'
                     }
                 }
             }
@@ -86,25 +89,15 @@ pipeline {
                         echo 'Setup a standard'
                     }
                 }
-                stage('Merge Code Local'){
+                stage('Push the Container'){
                     steps{
-                        echo 'Auto Merge Code based on standard'
+                        echo 'run pre-intergration test'
                     }
                 }
             }
         }
-        stage('Run Integration Tests (Container)') {
-            stages{
-                stage('Re-Build'){
-                    steps{
-                        echo 'Re-Building/Compile......'
-                    }
-                }
-                stage('Re-Package'){
-                    steps{
-                        echo 'Re-Package......'
-                    }
-                }                
+        stage('Run Integration Tests') {
+            stages{              
                 stage('Sanity Test'){
                     steps{
                         echo 'Re-Do QA_Test'
