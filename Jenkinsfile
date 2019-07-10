@@ -24,18 +24,20 @@ pipeline {
                 }
                 stage('Compile'){
                 	parallel{
-                		stage{
-                			stage('Check GCC'){
-                				steps{
-                					echo 'check Compiler version'
+                		stage('PC'){
+                			stages{
+                				stage('Check GCC'){
+                					steps{
+                						echo 'check Compiler version'
+                					}
                 				}
-                			}
-                			stage('PC Compile'){
-                				steps{
-                					echo 'Compile to a bin file'
-                					sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                				stage('PC Compile'){
+                					steps{
+                						echo 'Compile to a bin file'
+                						sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                					}
                 				}
-                			}                			
+                			}              			
                 		}
                 		stage('Lunix Compile'){
                 			steps{
