@@ -22,25 +22,27 @@ pipeline {
                 		echo 'include enough Library files in the compile file or c file'
                 	}
                 }
-                parallel{
-                	stage('PC Compile'){
-                		steps{
-                			echo 'Compile to a bin file'
-                			sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                stage('Compile'){
+                	parallel{
+                		stage('PC Compile'){
+                			steps{
+                				echo 'Compile to a bin file'
+                				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                			}
                 		}
+                		stage('Lunix Compile'){
+                			steps{
+                				echo 'Compile to a bin file'
+                				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                			}
+                		}
+                		stage('Special Compile'){
+                			steps{
+                				echo 'Compile to a bin file'
+                				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                			}
+                		}                  
                 	}
-                	stage('Lunix Compile'){
-                		steps{
-                			echo 'Compile to a bin file'
-                			sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
-                		}
-                	}
-                	stage('Special Compile'){
-                		steps{
-                			echo 'Compile to a bin file'
-                			sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
-                		}
-                	}                  
                 }
             }
         }
