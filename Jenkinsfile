@@ -9,6 +9,7 @@ pipeline {
         }
         // Build and Package Stage will push bin file to backend server
         // and load the bin file into the Safe
+        // compile parallel
         stage('First Build Stage') {
             stages {
                 stage('Check GCC'){
@@ -21,11 +22,25 @@ pipeline {
                 		echo 'include enough Library files in the compile file or c file'
                 	}
                 }
-                stage('Compile'){
-                	steps{
-                		echo 'Compile to a bin file'
-                		sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                parallel{
+                	stage('PC Compile'){
+                		steps{
+                			echo 'Compile to a bin file'
+                			sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                		}
                 	}
+                	stage('Lunix Compile'){
+                		steps{
+                			echo 'Compile to a bin file'
+                			sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                		}
+                	}
+                	stage('Special Compile'){
+                		steps{
+                			echo 'Compile to a bin file'
+                			sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
+                		}
+                	}                  
                 }
             }
         }
