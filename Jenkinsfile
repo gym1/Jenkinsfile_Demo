@@ -71,6 +71,11 @@ pipeline {
                 }                		
                 stage('Special'){
                 	stages{
+                		stage('server call?'){
+                			steps{
+                				echo 'may request a special server call'
+                			}
+                		}
                 		stage('Get the lastest version of the code'){
                 			steps{
                 				checkout scm
