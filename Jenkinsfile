@@ -9,7 +9,7 @@ pipeline {
             parallel{
           		stage('PC'){
           			agent{
-          				label 'PC'
+          				label "PC"
           			}
            			stages{
                 		stage('Get latest version of code'){
