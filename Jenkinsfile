@@ -5,21 +5,20 @@ pipeline {
         // Build and Package Stage will push bin file to backend server
         // and load the bin file into the Safe
         // compile parallel
+        // if the jenkins serve is set in PC
         stage('Build and Compile'){
             parallel{
           		stage('PC'){
-          			agent{
-          				label "PC"
-          			}
            			stages{
                 		stage('Get latest version of code'){
                 			steps{
                 				checkout scm
+                				echo 'git clone the code'
                 			}
                 		}
-                		stage('Check GCC'){
+                		stage('Check Library'){
                 			steps{
-                				echo 'check Compiler version'
+                				echo 'include enough Library files in the compile file or c file'
                 			}
                 		}
                 		stage('PC Compile'){
@@ -32,9 +31,22 @@ pipeline {
                 }
                 stage('Lunix'){
                 	stages{
-                		stage('Install Library'){
+                		stage('SSH'){
                 			steps{
-                				echo 'include enough Library files in the compile file or c file'
+                				echo 'ssh lunix or rasPI'
+                			}
+
+                		}
+                		stage('Get lastest version of code'){
+                			steps{
+                				checkout scm
+                				echo 'git clone the code'
+                			}
+                		}
+                		stage('Check Compile'){
+                			steps{
+                				echo 'check gcc-version'
+                				sh 'gcc -v'
                 			}
                 		}
                 		stage('Lunix Compile'){
@@ -47,6 +59,11 @@ pipeline {
                 }                		
                 stage('Special'){
                 	stages{
+                		stage('Get the lastest version of the code'){
+                			steps{
+                				checkout scm
+                			}
+                		}
                 		stage('Special Compile'){
                 			steps{
                 				echo 'Compile to a bin file'
