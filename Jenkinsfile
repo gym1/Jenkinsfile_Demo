@@ -8,6 +8,9 @@ pipeline {
         stage('Build and Compile'){
             parallel{
           		stage('PC'){
+          			agent{
+          				label 'PC'
+          			}
            			stages{
                 		stage('Get latest version of code'){
                 			steps{
