@@ -27,6 +27,12 @@ pipeline {
                 				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
                 			}
                 		}
+                		stage('Push to Bitbucket')
+                		{
+                			steps{
+                				echo 'git push orignal bin-branch'
+                			}
+                		}
                 	}              			
                 }
                 stage('Lunix'){
@@ -55,6 +61,12 @@ pipeline {
                 				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
                 			}
                 		}
+                		stage('Push to Bitbucket')
+                		{
+                			steps{
+                				echo 'git push orignal bin-branch'
+                			}
+                		}
                 	}
                 }                		
                 stage('Special'){
@@ -70,21 +82,44 @@ pipeline {
                 				sh 'gcc -Wall Reverse_String_I.c -o stringR.bin'
                 			}
                 		}
+                		stage('Push to Bitbucket')
+                		{
+                			steps{
+                				echo 'git push orignal bin-branch'
+                			}
+                		}                		
                 	}	
                 }                  
             }
         }
         stage('Package Stage'){
             stages{
-                stage('Push bin to backend'){
+            	stage('Git bin file'){
+            		steps{
+            			echo 'git clone bin files from bin-branch'
+            		}
+            	}
+                stage('Cross Compile'){
                     steps{
-                        echo 'Pushing'
+                        echo 'Canadian Cross Method?'
+                        echo 'make all bin file together'
                     }
                 }
-                stage('Load to Safe'){
+                stage('Push to Bitbucket'){
                     steps{
-                        echo 'Loading...'
+                        echo 'Pushing...'
                     }
+                }
+                stage('Connect to backend'){
+                	steps{
+                		echo 'Connected to backend'
+                		echo 'link the Bitbucket-bin brach to backend?'
+                	}
+                }
+                stage('Load to SAFE'){
+                	steps{
+                		echo 'load to Safe'
+                	}
                 }
             }
         }            
